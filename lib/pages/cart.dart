@@ -54,12 +54,9 @@ class _CartPageState extends State<CartPage> {
                 padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                 margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Colors.black54,
-                      width: 2.0
-                    ),
-                    ),
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black54, width: 2.0),
+                ),
                 child: Text('去逛逛'),
               )
             ],
@@ -68,13 +65,32 @@ class _CartPageState extends State<CartPage> {
       );
     }
 
-    return Container(
-      child: Column(
-        children: <Widget>[
-          emptyHandler(),
-          GoodListGridView(list: hotGoodsList, title: "为你推荐"),
-        ],
-      ),
+    Widget renderTitle({String title}) {
+      return SliverToBoxAdapter(
+          child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(bottom: BorderSide(color: Colors.black54))),
+        child: ListTile(
+          title: Text(title),
+        ),
+      ));
+    }
+
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: emptyHandler(),
+        ),
+        renderTitle(title: '为你推荐'),
+        GoodListGridView(list: hotGoodsList),
+      ],
+      // child: Column(
+      //   children: <Widget>[
+      //     emptyHandler(),
+      //     GoodListGridView(list: hotGoodsList, title: "为你推荐"),
+      //   ],
+      // ),
     );
   }
 }

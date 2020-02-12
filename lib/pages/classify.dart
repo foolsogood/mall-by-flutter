@@ -23,8 +23,8 @@ class GoodListItemModel {
 }
 
 class _ClassifyPageState extends State<ClassifyPage> {
-  List cateList=[];
-  List<GoodListItemModel> goodList=[];
+  List cateList = [];
+  List<GoodListItemModel> goodList = [];
   ScrollController _scrollController;
   @override
   void initState() {
@@ -83,9 +83,12 @@ class _ClassifyPageState extends State<ClassifyPage> {
   Widget build(BuildContext context) {
     Widget titleHandler() {
       if (cateList.length == 0) {
-        return Container();
+        // return Container();
+      return  SliverToBoxAdapter(
+            child: Container(),
+          );
       }
-      return Container(
+      var con = Container(
         color: Colors.white,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -108,81 +111,225 @@ class _ClassifyPageState extends State<ClassifyPage> {
           ),
         ),
       );
+      return SliverPersistentHeader(
+          pinned: true, delegate: CustomSliverDelegate(widget: con)
+          );
     }
 
-    Widget listHandler() {
-      if ( goodList.length == 0) {
-        return Container();
+    List<Widget> listHandler() {
+      if (goodList.length == 0) {
+        return List<Container>();
       }
-      return Container(
-        // padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-        child: ListView(
-          controller: _scrollController,
-          shrinkWrap: true,
-          children: goodList.map((item) {
-            final goodListItem = item.data;
-            var _cur = GridView.count(
-              shrinkWrap: true,
-              //水平子Widget之间间距
-              crossAxisSpacing: 5.0,
-              //垂直子Widget之间间距
+      // return Container(
+      //   child: ListView(
+      //     controller: _scrollController,
+      //     shrinkWrap: true,
+      //     children: goodList.map((item) {
+      //       final goodListItem = item.data;
+      //       var _cur = GridView.count(
+      //         shrinkWrap: true,
+      //         //水平子Widget之间间距
+      //         crossAxisSpacing: 5.0,
+      //         //垂直子Widget之间间距
+      //         mainAxisSpacing: 5.0,
+      //         //GridView内边距
+      //         // padding: EdgeInsets.all(10.0),
+      //         //一行的Widget数量
+      //         crossAxisCount: 3,
+      //         //子Widget宽高比例
+      //         childAspectRatio: 0.75,
+      //         //子Widget列表
+      //         children: goodListItem.map((goodInfo) {
+      //           return GestureDetector(
+      //             onTap: () {
+      //               NavigatorUtil.jump(context,
+      //                   '${Routes.goodDetail}?goodId=${goodInfo.goodId}');
+      //             },
+      //             child: Container(
+      //               color: Colors.white,
+      //               child: Column(
+      //                 children: <Widget>[
+      //                   Image.network(goodInfo.imgs[0]),
+      //                   Text(goodInfo.goodName)
+      //                 ],
+      //               ),
+      //             ),
+      //           );
+      //         }).toList(),
+      //       );
+      //       return Container(
+      //         margin: const EdgeInsets.only(top: 10.0),
+      //         child: ListView(
+      //           controller: _scrollController,
+      //           shrinkWrap: true,
+      //           children: <Widget>[
+      //             Container(
+      //               height: 40.0,
+      //               color: Colors.white,
+      //               child: Center(
+      //                 child: Text(item.data[0].cate),
+      //               ),
+      //             ),
+      //             Divider(
+      //               height: 1.0,
+      //               color: Colors.black54,
+      //             ),
+      //             _cur
+      //           ],
+      //         ),
+      //       );
+      //     }).toList(),
+      //   ),
+      // );
+      List<Widget> _list = [];
+      Widget renderTitle({String title}) {
+        return SliverToBoxAdapter(
+            child: Container(
+          margin: const EdgeInsets.fromLTRB(0, 2.0, 0, 2.0),
+          height: 40.0,
+          color: Colors.white,
+          child: Center(
+            child: Text(title),
+          ),
+        ));
+      }
+
+      Widget renderGrid({GoodListItemModel goodListItem}) {
+        return SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, //Grid按两列显示
               mainAxisSpacing: 5.0,
-              //GridView内边距
-              // padding: EdgeInsets.all(10.0),
-              //一行的Widget数量
-              crossAxisCount: 3,
-              //子Widget宽高比例
+              crossAxisSpacing: 5.0,
               childAspectRatio: 0.75,
-              //子Widget列表
-              children: goodListItem.map((goodInfo) {
-                return GestureDetector(
-                  onTap: () {
-                    NavigatorUtil.jump(context,
-                        '${Routes.goodDetail}?goodId=${goodInfo.goodId}');
-                  },
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: <Widget>[
-                        Image.network(goodInfo.imgs[0]),
-                        Text(goodInfo.goodName)
-                      ],
-                    ),
+            ),
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int idx) {
+              final goodInfo = goodListItem.data[idx];
+              return GestureDetector(
+                onTap: () {
+                  NavigatorUtil.jump(context,
+                      '${Routes.goodDetail}?goodId=${goodInfo.goodId}');
+                },
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Image.network(goodInfo.imgs[0]),
+                      Text(goodInfo.goodName)
+                    ],
                   ),
-                );
-              }).toList(),
-            );
-            return Container(
-              margin: const EdgeInsets.only(top: 10.0),
-              child: ListView(
-                controller: _scrollController,
-                shrinkWrap: true,
-                children: <Widget>[
-                  Container(
-                    height: 40.0,
-                    color: Colors.white,
-                    child: Center(
-                      child: Text(item.data[0].cate),
-                    ),
-                  ),
-                  Divider(
-                    height: 1.0,
-                    color: Colors.black54,
-                  ),
-                  _cur
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-      );
+                ),
+              );
+            }, childCount: goodListItem.data.length));
+      }
+
+      goodList.forEach((goodListItem) {
+        _list.add(renderTitle(title: goodListItem.data[0].cate));
+        _list.add(renderGrid(goodListItem: goodListItem));
+      });
+      // var _list = goodList.map((goodListItem) {
+      //   return
+      //   SliverGrid(
+      //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //       crossAxisCount: 3, //Grid按两列显示
+      //       mainAxisSpacing: 5.0,
+      //       crossAxisSpacing: 5.0,
+      //       childAspectRatio: 0.75,
+      //     ),
+      //     delegate: SliverChildBuilderDelegate((BuildContext context, int idx) {
+      //       final goodInfo = goodListItem.data[idx];
+      //       return GestureDetector(
+      //         onTap: () {
+      //           NavigatorUtil.jump(
+      //               context, '${Routes.goodDetail}?goodId=${goodInfo.goodId}');
+      //         },
+      //         child: Container(
+      //           color: Colors.white,
+      //           child: Column(
+      //             children: <Widget>[
+      //               Image.network(goodInfo.imgs[0]),
+      //               Text(goodInfo.goodName)
+      //             ],
+      //           ),
+      //         ),
+      //       );
+      //     }, childCount: goodListItem.data.length),
+      //   );
+      // }).toList();
+      return _list;
+      // return SliverPadding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     sliver: SliverFixedExtentList(
+      //       itemExtent: 50.0,
+      //       delegate:
+      //           SliverChildBuilderDelegate((BuildContext context, int index) {
+      //         final goodListItem = goodList[index];
+      //         print(goodListItem);
+      //         return SliverGrid(
+      //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //             crossAxisCount: 3, //Grid按两列显示
+      //             mainAxisSpacing: 5.0,
+      //             crossAxisSpacing: 5.0,
+      //             childAspectRatio: 0.75,
+      //           ),
+      //           delegate:
+      //               SliverChildBuilderDelegate((BuildContext context, int idx) {
+      //             return Container(
+      //                 margin: const EdgeInsets.only(top: 10.0),
+      //                 child: Text('123')
+      //                 //  Container(
+      //                 //   color: Colors.white,
+      //                 //   child: Column(
+      //                 //     children: <Widget>[
+      //                 //       // Image.network(goodInfo.imgs[0]),
+      //                 //       // Text(goodInfo.goodName)
+
+      //                 //     ],
+      //                 //   ),
+      //                 // )
+      //                 );
+      //           }, childCount: goodListItem.data.length),
+      //         );
+      //       }, childCount: goodList.length),
+      //     ));
     }
 
-    return Container(
-      child: ListView(
-        controller: _scrollController,
-        children: <Widget>[titleHandler(), listHandler()],
+    return Material(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          titleHandler(),
+          // SliverToBoxAdapter(
+          //   child: titleHandler(),
+          // ),
+          ...listHandler(),
+        ],
       ),
     );
+    // return Container(
+    //   child: ListView(
+    //     controller: _scrollController,
+    //     children: <Widget>[titleHandler(), listHandler()],
+    //   ),
+    // );
   }
+}
+
+class CustomSliverDelegate extends SliverPersistentHeaderDelegate {
+  final Container widget;
+  CustomSliverDelegate({Key key, this.widget});
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return widget;
+  } // 头部展示内容
+
+  @override
+  double get maxExtent => 50.0; // 最大高度
+
+  @override
+  double get minExtent => 50.0; // 最小高度
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) =>
+      false; // 因为所有的内容都是固定的，所以不需要更新
 }

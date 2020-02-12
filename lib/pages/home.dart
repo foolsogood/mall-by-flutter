@@ -112,23 +112,38 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: 
-       CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: bannerHandler(),
-          ),
-          SliverToBoxAdapter(
-            child: GoodListGridView(list: newGoodsList, title: "最新商品"),
-          ),
-          SliverToBoxAdapter(
-            child: GoodListGridView(list: hotGoodsList, title: "热门商品"),
-          ),
+    Widget renderTitle({String title}) {
+      return SliverToBoxAdapter(
+          child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(bottom: BorderSide(color: Colors.black54))),
+        child: ListTile(
+          title: Text(title),
+        ),
+      ));
+    }
 
-        ],
-      )
-    );
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+              child: bannerHandler(),
+            ),
+            renderTitle(title: '最新商品'),
+            GoodListGridView(list: newGoodsList),
+            renderTitle(title: '热门商品'),
+            GoodListGridView(list: hotGoodsList),
+            // SliverPadding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   sliver: GoodListGridView(list: newGoodsList, title: "最新商品"),
+            // ),
+            // SliverPadding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   sliver: GoodListGridView(list: hotGoodsList, title: "热门商品"),
+            // ),
+          ],
+        ));
   }
 }

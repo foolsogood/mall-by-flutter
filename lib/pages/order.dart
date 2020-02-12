@@ -14,7 +14,7 @@ class _OrderPageState extends State<OrderPage>
     with SingleTickerProviderStateMixin {
   List<OrderModel> orderList;
   TabController mTabController;
-  int initialIndex=0;
+  int initialIndex = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -34,7 +34,7 @@ class _OrderPageState extends State<OrderPage>
           .indexWhere((item) => item["status"] == int.parse(widget.typeId));
       print('当前status为${widget.typeId},下标$_idx');
       setState(() {
-        initialIndex=_idx;
+        initialIndex = _idx;
       });
       getOrders(currentIdx: int.parse(widget.typeId));
     } else {
@@ -94,7 +94,7 @@ class _OrderPageState extends State<OrderPage>
         initialIndex: initialIndex,
         length: statusList.length,
         child: Scaffold(
-            body:  NestedScrollView(
+            body: NestedScrollView(
                 headerSliverBuilder: (context, bool) {
                   return [
                     SliverAppBar(
@@ -160,6 +160,15 @@ class _OrderPageState extends State<OrderPage>
                           );
                         }).toList(),
                       );
+                      // return SliverFixedExtentList(
+                      //   itemExtent: 50.0,
+                      //   delegate: SliverChildBuilderDelegate(
+                      //       (BuildContext context, int index) {
+                      //     return OrderItem(
+                      //       orderInfo: orderList[index],
+                      //     );
+                      //   }, childCount: orderList.length),
+                      // );
                     }).toList()))));
   }
 }
