@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
+
+// import 'package:fish_redux/fish_redux.dart' as Fish;
+// import '../redux/shopCart_page/action.dart';
+// import '../redux/shopCart_page/state.dart';
+// import '../redux/shopCart_page/reducer.dart';
+
 
 import '../services/api.dart';
 import '../utils/net.dart';
@@ -30,7 +35,6 @@ class _GoodDetailPageState extends State<GoodDetailPage> {
     print(url);
     try {
       final response = await NetUtils.get(url);
-      print(response);
       setState(() {
         goodDetail = GoodDetailModel.fromJson(response["data"]);
       });
@@ -222,13 +226,18 @@ class _GoodDetailPageState extends State<GoodDetailPage> {
                           ),
                           Expanded(
                             flex: 3,
-                            child: Container(
+                            child: InkWell(
+                              onTap: (){
+                                // dispatch(ShopCartActionCreator.onAddToCartAction(goodId, goodInfo))
+                              },
+                              child: Container(
                               height: 60.0,
                               color: Colors.orangeAccent,
                               child: Center(
                                 child: Text("加入购物车",
                                   style: TextStyle(color: Colors.white)),
                               ),
+                            )
                             ),
                           ),
                           Expanded(

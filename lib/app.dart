@@ -3,7 +3,7 @@ import 'package:fluro/fluro.dart';
 import 'routes/application.dart';
 import 'routes/routers.dart';
 import 'pages/common/with_bottom_tab.dart';
-// import './pages/goodDetail.dart';
+import './pages/goodDetail.dart';
 import './pages/test.dart';
 
 class App extends StatelessWidget {
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
     return MaterialApp(
         title: '我的商城',
         home: WithBottomTab(),
-        // home: TestPage(),
+        // home: GoodDetailPage(),
 
         onGenerateRoute: Application.router.generator);
   }

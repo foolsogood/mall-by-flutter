@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
           child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border(bottom: BorderSide(color: Colors.black54))),
+            border: Border(bottom: BorderSide(color: Color(0xFFE0E0E0)))),
         child: ListTile(
           title: Text(title),
         ),

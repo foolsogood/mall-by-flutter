@@ -55,7 +55,7 @@ class _CartPageState extends State<CartPage> {
                 margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Colors.black54, width: 2.0),
+                  border: Border.all(color: Color(0xFFE0E0E0), width: 2.0),
                 ),
                 child: Text('去逛逛'),
               )
@@ -70,7 +70,7 @@ class _CartPageState extends State<CartPage> {
           child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border(bottom: BorderSide(color: Colors.black54))),
+            border: Border(bottom: BorderSide(color: Color(0xFFE0E0E0)))),
         child: ListTile(
           title: Text(title),
         ),

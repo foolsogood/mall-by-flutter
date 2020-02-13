@@ -85,7 +85,7 @@ class OrderItem extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
                     border:Border.all(
-                      color: Colors.grey,
+                      color: Color(0xFFE0E0E0),
                       width: 1.0
                     )
                   ),
