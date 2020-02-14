@@ -5,8 +5,14 @@ import '../pages/my.dart';
 import '../pages/classify.dart';
 import '../pages/cart.dart';
 
-import '../pages/goodDetail.dart';
+// import '../pages/goodDetail.dart';
 import '../pages/order.dart';
+import '../pages/goodDetail_page/page.dart';
+
+
+import '../redux/Global_Shop_Cart/state.dart';
+import '../redux/Global_Shop_Cart/store.dart';
+
 
 final homeHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -37,7 +43,6 @@ final orderHandler = new Handler(
 final goodDetailHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   final goodId = params["goodId"].first;
-  print(goodId);
-
-  return GoodDetailPage(goodId: goodId.toString());
+return GoodDetailPage().buildPage({"goodId": goodId.toString()});
+  // return GoodDetailPage(goodId: goodId.toString());
 });

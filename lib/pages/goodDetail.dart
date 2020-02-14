@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 // import 'package:fish_redux/fish_redux.dart' as Fish;
-// import '../redux/shopCart_page/action.dart';
-// import '../redux/shopCart_page/state.dart';
-// import '../redux/shopCart_page/reducer.dart';
+// import '../redux/Global_Shop_Cart/action.dart';
+// import '../redux/Global_Shop_Cart/state.dart';
+// import '../redux/Global_Shop_Cart/reducer.dart';
 
 
 import '../services/api.dart';
@@ -28,9 +28,9 @@ class _GoodDetailPageState extends State<GoodDetailPage> {
   }
 
   void getGoodById() async {
-    // final _id = "42fbd746-ac54-4aed-87ce-fa36866969e0";
-    final url = Api.getGoodById.replaceAll(':goodId', widget.goodId);
-    // final url = Api.getGoodById.replaceAll(':goodId', _id);
+    final _id = "42fbd746-ac54-4aed-87ce-fa36866969e0";
+    // final url = Api.getGoodById.replaceAll(':goodId', widget.goodId);
+    final url = Api.getGoodById.replaceAll(':goodId', _id);
 
     print(url);
     try {
@@ -91,7 +91,7 @@ class _GoodDetailPageState extends State<GoodDetailPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(goodDetail.price),
+                  Text(goodDetail.price.toString()),
                   Icon(
                     Icons.favorite,
                     color: Colors.redAccent,
@@ -228,7 +228,7 @@ class _GoodDetailPageState extends State<GoodDetailPage> {
                             flex: 3,
                             child: InkWell(
                               onTap: (){
-                                // dispatch(ShopCartActionCreator.onAddToCartAction(goodId, goodInfo))
+                                // dispatch(GlobalShopCartActionCreator.onAddToCartAction(goodId, goodInfo))
                               },
                               child: Container(
                               height: 60.0,

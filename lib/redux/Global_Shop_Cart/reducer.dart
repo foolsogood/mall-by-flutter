@@ -4,10 +4,10 @@ import '../../models/shopCartModel.dart';
 import 'action.dart';
 import 'state.dart';
 
-Reducer<ShopCartState> buildReducer() {
+Reducer<GlobalShopCartState> buildReducer() {
   return asReducer(
-    <Object, Reducer<ShopCartState>>{
-      ShopCartAction.onAddToCart: _onAddToCartReducer,
+    <Object, Reducer<GlobalShopCartState>>{
+      GlobalShopCartAction.onAddToCart: _onAddToCartReducer,
     },
   );
 }
@@ -17,23 +17,26 @@ Map<String, int> calcTotalNumAndPrice(Map<String, ShopCartModel> shopCart) {
   int totalNumber = 0;
   int totalPrice = 0;
   List<ShopCartModel>.from(shopCart.values).forEach((item) {
+    print(item.number);
+    print(item.totalPrice);
     totalNumber += item.number;
     totalPrice += item.totalPrice;
   });
   return {"totalNumber": totalNumber, "totalPrice": totalPrice};
 }
 // 添加进购物车或增加购物车
-ShopCartState _onAddToCartReducer(ShopCartState state, Action action) {
-  final ShopCartState newState = state.clone();
-  var goodId = action.payload.goodId;
-  var goodInfo = action.payload.goodInfo;
+GlobalShopCartState _onAddToCartReducer(GlobalShopCartState state, Action action) {
+  final GlobalShopCartState newState = state.clone();
+  var goodId = action.payload["goodId"];
+  var goodInfo = action.payload["goodInfo"];
   var tempShopCart = newState.shopCart;
   bool isExistGoodId = tempShopCart.containsKey(goodId);
   if (isExistGoodId) {
     var price = tempShopCart[goodId].price;
     var number = tempShopCart[goodId].number;
     number++;
-    int totalPrice = int.parse(price) * number;
+    int totalPrice = price * number;
+    print('===$totalPrice');
     tempShopCart[goodId].totalPrice = totalPrice;
     tempShopCart[goodId].number = number;
   } else {

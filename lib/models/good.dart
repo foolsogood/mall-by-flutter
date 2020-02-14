@@ -16,7 +16,7 @@ class GoodModel {
     String goodName;
     List<String> imgs;
     String desction;
-    String price;
+    int price;
     int isHot;
     int isNew;
     List<String> detailImg;

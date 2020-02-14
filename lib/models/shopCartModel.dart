@@ -11,7 +11,7 @@ String shopCartModelToJson(ShopCartModel data) => json.encode(data.toJson());
 class ShopCartModel {
     String goodId;
     String goodName;
-    String price;
+    int price;
     int number;
     int totalPrice;
     bool isSelected;
@@ -32,7 +32,7 @@ class ShopCartModel {
         goodName: json["goodName"],
         price: json["price"],
         number: json["number"],
-        totalPrice: json["total_price"],
+        totalPrice: json["totalPrice"],
         isSelected: json["isSelected"],
         imgs: json["imgs"],
     );
@@ -42,7 +42,7 @@ class ShopCartModel {
         "goodName": goodName,
         "price": price,
         "number": number,
-        "total_price": totalPrice,
+        "totalPrice": totalPrice,
         "isSelected": isSelected,
         "imgs": imgs,
     };

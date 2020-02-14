@@ -37,7 +37,7 @@ class GoodItem extends StatelessWidget {
             ),
             Container(
               child: Text(
-                goodInfo.price,
+                goodInfo.price.toString(),
                 style: TextStyle(color: Colors.redAccent),
               ),
             ),
