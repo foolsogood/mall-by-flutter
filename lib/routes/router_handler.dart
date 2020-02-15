@@ -3,11 +3,13 @@ import 'package:fluro/fluro.dart';
 import '../pages/home.dart';
 import '../pages/my.dart';
 import '../pages/classify.dart';
-import '../pages/cart.dart';
+// import '../pages/cart.dart';
 
 // import '../pages/goodDetail.dart';
 import '../pages/order.dart';
 import '../pages/goodDetail_page/page.dart';
+import '../pages/cart_page/page.dart';
+
 
 
 import '../redux/Global_Shop_Cart/state.dart';
@@ -21,7 +23,7 @@ final homeHandler = new Handler(
 });
 final cartHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return CartPage();
+  return CartPage().buildPage({});
 });
 final classifyHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {

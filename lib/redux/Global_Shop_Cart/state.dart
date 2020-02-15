@@ -1,6 +1,8 @@
 import 'package:fish_redux/fish_redux.dart';
 import '../../models/shopCartModel.dart';
 
+import '../../utils/sqflite/shopcart_dbhelper.dart';
+
 abstract class GlobalShopCartBaseState {
   Map<String, ShopCartModel> get shopCart;
   set shopCart(Map<String, ShopCartModel> map);
@@ -31,5 +33,13 @@ class GlobalShopCartState
 }
 
 GlobalShopCartState initState(Map<String, dynamic> args) {
+   final d=_getShopCartData();
+   print(d);
   return GlobalShopCartState();
+}
+
+Future<List<ShopCartModel>> _getShopCartData() async{
+var dbHelper=ShopCartDBHelper();
+  Future<List<ShopCartModel>> shopCartData=dbHelper.getShopCartData();
+  return shopCartData;
 }

@@ -4,6 +4,8 @@ import '../../models/shopCartModel.dart';
 import 'action.dart';
 import 'state.dart';
 
+import '../../utils/sqflite/shopcart_dbhelper.dart';
+
 Reducer<GlobalShopCartState> buildReducer() {
   return asReducer(
     <Object, Reducer<GlobalShopCartState>>{
@@ -24,8 +26,11 @@ Map<String, int> calcTotalNumAndPrice(Map<String, ShopCartModel> shopCart) {
   });
   return {"totalNumber": totalNumber, "totalPrice": totalPrice};
 }
+
 // 添加进购物车或增加购物车
-GlobalShopCartState _onAddToCartReducer(GlobalShopCartState state, Action action) {
+GlobalShopCartState _onAddToCartReducer(
+    GlobalShopCartState state, Action action) {
+  var dbHelper = ShopCartDBHelper();
   final GlobalShopCartState newState = state.clone();
   var goodId = action.payload["goodId"];
   var goodInfo = action.payload["goodInfo"];
@@ -41,6 +46,7 @@ GlobalShopCartState _onAddToCartReducer(GlobalShopCartState state, Action action
     tempShopCart[goodId].number = number;
   } else {
     tempShopCart[goodId] = goodInfo;
+    dbHelper.insertCart(goodInfo);
   }
   int totalNumber = calcTotalNumAndPrice(tempShopCart)["totalNumber"];
   int totalPrice = calcTotalNumAndPrice(tempShopCart)["totalPrice"];

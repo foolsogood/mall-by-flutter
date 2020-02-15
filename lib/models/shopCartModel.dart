@@ -14,7 +14,7 @@ class ShopCartModel {
     int price;
     int number;
     int totalPrice;
-    bool isSelected;
+    int isSelected;
     String imgs;
 
     ShopCartModel({

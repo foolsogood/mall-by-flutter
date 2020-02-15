@@ -212,7 +212,7 @@ Widget buildView(
                                   "price": goodDetail.price,
                                   "number": 1,
                                   "totalPrice": goodDetail.price,
-                                  "isSelected": true,
+                                  "isSelected": 1,
                                   "imgs": goodDetail.imgs[0],
                                 };
                                 ShopCartModel goodInfo =
