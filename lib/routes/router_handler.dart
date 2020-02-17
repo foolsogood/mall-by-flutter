@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:fish_redux/fish_redux.dart';
 import 'package:fluro/fluro.dart';
 import '../pages/home.dart';
 import '../pages/my.dart';
 import '../pages/classify.dart';
-// import '../pages/cart.dart';
 
 // import '../pages/goodDetail.dart';
 import '../pages/order.dart';
 import '../pages/goodDetail_page/page.dart';
 import '../pages/cart_page/page.dart';
 
-
-
 import '../redux/Global_Shop_Cart/state.dart';
 import '../redux/Global_Shop_Cart/store.dart';
-
 
 final homeHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -23,7 +20,31 @@ final homeHandler = new Handler(
 });
 final cartHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return CartPage().buildPage({});
+  var page = CartPage();
+  bool flag = page.isTypeof<GlobalBaseState>();
+  print('flag is $flag');
+  if (flag) {
+    page.connectExtraStore<GlobalState>(GlobalStore.store,
+        (Object pagestate, GlobalState appState) {
+      // final GlobalBaseState p=pagestate;
+      // if(p.totalNumber!=appState.totalNumber){
+      print('=====');
+
+      if (pagestate is Cloneable) {
+        final Object copy = pagestate.clone();
+        final GlobalBaseState newState = copy;
+        newState.shopCart = appState.shopCart;
+        newState.totalNumber = appState.totalNumber;
+        newState.totalPrice = appState.totalPrice;
+        newState.themeColor = appState.themeColor;
+
+        return newState;
+      }
+      // }
+      return pagestate;
+    });
+  }
+  return page.buildPage({});
 });
 final classifyHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -35,8 +56,8 @@ final myHandler = new Handler(
 });
 final orderHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      // 相当于params["typeId"]？params["typeId"].first：null
-  final typeId =params["typeId"]?.first;
+  // 相当于params["typeId"]？params["typeId"].first：null
+  final typeId = params["typeId"]?.first;
   if (typeId == null) {
     return OrderPage();
   }
@@ -45,6 +66,6 @@ final orderHandler = new Handler(
 final goodDetailHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   final goodId = params["goodId"].first;
-return GoodDetailPage().buildPage({"goodId": goodId.toString()});
+  return GoodDetailPage().buildPage({"goodId": goodId.toString()});
   // return GoodDetailPage(goodId: goodId.toString());
 });

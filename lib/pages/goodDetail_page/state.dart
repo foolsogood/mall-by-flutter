@@ -1,7 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import '../../models/goodDetail.dart';
-import '../../redux/Global_Shop_Cart/state.dart';
-import '../../models/shopCartModel.dart';
+// import '../../redux/Global_Shop_Cart/state.dart';
+// import '../../models/shopCartModel.dart';
 
 class GoodDetailState
     implements  Cloneable<GoodDetailState> {
@@ -27,6 +27,6 @@ class GoodDetailState
 }
 
 GoodDetailState initState(Map<String, dynamic> args) {
-  print(args);
+  // print(args);
   return GoodDetailState()..goodId = args["goodId"];
 }

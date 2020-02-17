@@ -5,7 +5,7 @@ import 'routes/routers.dart';
 import 'pages/common/with_bottom_tab.dart';
 // import './pages/goodDetail.dart';
 import './pages/goodDetail_page/page.dart';
-
+import './pages/cart_page/page.dart';
 import './pages/test.dart';
 
 class App extends StatelessWidget {
@@ -19,6 +19,7 @@ class App extends StatelessWidget {
     return MaterialApp(
         title: '我的商城',
         home: WithBottomTab(),
+
         // home: GoodDetailPage().buildPage({"goodId":"42fbd746-ac54-4aed-87ce-fa36866969e0"}),
 
         onGenerateRoute: Application.router.generator);

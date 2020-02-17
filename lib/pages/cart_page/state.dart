@@ -1,11 +1,32 @@
-import 'package:fish_redux/fish_redux.dart';
-import '../../models/good.dart';
+import 'package:fish_redux/fish_redux.dart' as Fish;
+import 'package:flutter/material.dart' hide Action;
 
-class CartState implements Cloneable<CartState> {
+import '../../models/good.dart';
+import '../../redux/Global_Shop_Cart/state.dart';
+import '../../redux/Global_Shop_Cart/store.dart';
+
+import '../../models/shopCartModel.dart';
+
+
+class CartState implements GlobalBaseState, Fish.Cloneable<CartState> {
   List<GoodModel> hotGoodsList;
   @override
+  Map<String, ShopCartModel> shopCart;
+  // 总数量
+  @override
+  int totalNumber;
+  // 商品总价格
+  @override
+  int totalPrice;
+  @override
+  Color themeColor;
+  @override
   CartState clone() {
-    return CartState()..hotGoodsList = hotGoodsList;
+    return CartState()
+      ..totalNumber = totalNumber
+      ..totalPrice = totalPrice
+      ..shopCart = shopCart
+      ..hotGoodsList = hotGoodsList;
   }
 }
 

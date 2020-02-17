@@ -228,7 +228,7 @@ class _GoodDetailPageState extends State<GoodDetailPage> {
                             flex: 3,
                             child: InkWell(
                               onTap: (){
-                                // dispatch(GlobalShopCartActionCreator.onAddToCartAction(goodId, goodInfo))
+                                // dispatch(GlobalActionCreator.onAddToCartAction(goodId, goodInfo))
                               },
                               child: Container(
                               height: 60.0,

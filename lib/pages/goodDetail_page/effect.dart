@@ -12,12 +12,12 @@ import '../../models/goodDetail.dart';
 Effect<GoodDetailState> buildEffect() {
   return combineEffects(<Object, Effect<GoodDetailState>>{
     Lifecycle.initState: _loadData,
-    GoodDetailAction.action: _onAction,
+    // GoodDetailAction.action: _onAction,
     // GoodDetailAction.addToCart: _addToCart
   });
 }
 
-void _onAction(Action action, Context<GoodDetailState> ctx) {}
+// void _onAction(Action action, Context<GoodDetailState> ctx) {}
 // 加载接口数据
 void _loadData(Action action, Context<GoodDetailState> ctx) async {
   // print(ctx.state.goodId);
@@ -37,6 +37,6 @@ void _loadData(Action action, Context<GoodDetailState> ctx) async {
 //   var goodId = action.payload["goodId"];
 //   var goodInfo = action.payload["goodInfo"];
 
-//   GlobalShopCartStore.store.dispatch(
-//       GlobalShopCartActionCreator.onAddToCartAction(goodId, goodInfo));
+//   GlobalStore.store.dispatch(
+//       GlobalActionCreator.onAddToCartAction(goodId, goodInfo));
 // }

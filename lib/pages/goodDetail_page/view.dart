@@ -10,6 +10,8 @@ import 'action.dart';
 import 'state.dart';
 
 import '../../models/shopCartModel.dart';
+import '../../routes/routers.dart';
+import '../../routes/navigator_util.dart';
 
 Widget buildView(
     GoodDetailState state, Dispatch dispatch, ViewService viewService) {
@@ -174,38 +176,47 @@ Widget buildView(
                       children: <Widget>[
                         Expanded(
                           flex: 2,
-                          child: Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(Icons.home, color: Colors.grey),
-                                Text("主页"),
-                              ],
+                          child: InkWell(
+                            onTap: () {
+                              // NavigatorUtil.toHomePage(
+                              //     viewService.context);
+                            },
+                            child: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.home, color: Colors.grey),
+                                  Text("主页"),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: 60.0,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.class_,
-                                  color: Colors.grey,
+                            flex: 2,
+                            child: InkWell(
+                              onTap: () {
+                                // NavigatorUtil.redirect(
+                                //     viewService.context, Routes.classify);
+                              },
+                              child: Container(
+                                height: 60.0,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.class_,
+                                      color: Colors.grey,
+                                    ),
+                                    Text("分类")
+                                  ],
                                 ),
-                                Text("分类")
-                              ],
-                            ),
-                          ),
-                        ),
+                              ),
+                            )),
                         Expanded(
                           flex: 3,
                           child: InkWell(
                               onTap: () {
-                                print(goodDetail.price);
-
                                 Map<String, dynamic> _temp = {
                                   "goodId": goodDetail.goodId,
                                   "goodName": goodDetail.goodName,
@@ -217,10 +228,10 @@ Widget buildView(
                                 };
                                 ShopCartModel goodInfo =
                                     ShopCartModel.fromJson(_temp);
-                                    // dispatch(GoodDetailActionCreator.onAddToCart(goodId, goodInfo));
-                                GlobalShopCartStore.store.dispatch(
-                                    GlobalShopCartActionCreator
-                                        .onAddToCartAction(goodId, goodInfo));
+                                // dispatch(GoodDetailActionCreator.onAddToCart(goodId, goodInfo));
+                                GlobalStore.store.dispatch(
+                                    GlobalActionCreator.onAddToCartAction(
+                                        goodId, goodInfo));
                               },
                               child: Container(
                                 height: 60.0,

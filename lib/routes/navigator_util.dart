@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 import './application.dart';
 import './routers.dart';
+import '../pages/home.dart';
 class NavigatorUtil{
   static void goBack(BuildContext context){
     Navigator.pop(context);
@@ -20,4 +22,12 @@ class NavigatorUtil{
         return Application.router.navigateTo(context, title, transition: TransitionType.inFromRight);
         /// 指定了 转场动画
     }
+    // 跳到首页 
+    static Future toHomePage(BuildContext context) {
+    return Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+        (route) => route == null);
+  }
 }

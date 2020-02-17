@@ -1,45 +1,40 @@
-import 'package:fish_redux/fish_redux.dart';
+import 'package:fish_redux/fish_redux.dart' as Fish;
+import 'package:flutter/material.dart';
 import '../../models/shopCartModel.dart';
 
-import '../../utils/sqflite/shopcart_dbhelper.dart';
 
-abstract class GlobalShopCartBaseState {
+abstract class GlobalBaseState {
   Map<String, ShopCartModel> get shopCart;
   set shopCart(Map<String, ShopCartModel> map);
   int get totalNumber;
   set totalNumber(int number);
   int get totalPrice;
   set totalPrice(int number);
+  Color get themeColor;
+  set themeColor(Color color);
 }
 
-class GlobalShopCartState
-    implements GlobalShopCartBaseState, Cloneable<GlobalShopCartState> {
+class GlobalState
+    implements GlobalBaseState, Fish.Cloneable<GlobalState> {
   // 购物车集合
   @override
-  Map<String, ShopCartModel> shopCart = {};
+  Map<String, ShopCartModel> shopCart;
   // 总数量
   @override
-  int totalNumber = 0;
+  int totalNumber;
   // 商品总价格
   @override
   int totalPrice;
+
   @override
-  GlobalShopCartState clone() {
-    return GlobalShopCartState()
-      ..shopCart = shopCart
-      ..totalNumber = totalNumber
-      ..totalPrice = totalPrice;
+  Color themeColor;
+  @override
+  GlobalState clone() {
+    return GlobalState();
   }
 }
 
-GlobalShopCartState initState(Map<String, dynamic> args) {
-   final d=_getShopCartData();
-   print(d);
-  return GlobalShopCartState();
+GlobalState initState(Map<String, dynamic> args) {
+  return GlobalState();
 }
 
-Future<List<ShopCartModel>> _getShopCartData() async{
-var dbHelper=ShopCartDBHelper();
-  Future<List<ShopCartModel>> shopCartData=dbHelper.getShopCartData();
-  return shopCartData;
-}

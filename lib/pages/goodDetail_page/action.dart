@@ -3,12 +3,12 @@ import '../../models/goodDetail.dart';
 import '../../models/shopCartModel.dart';
 
 //TODO replace with your own action
-enum GoodDetailAction { action, loadData }
+enum GoodDetailAction {  loadData }
 
 class GoodDetailActionCreator {
-  static Action onAction() {
-    return const Action(GoodDetailAction.action);
-  }
+  // static Action onAction() {
+  //   return const Action(GoodDetailAction.action);
+  // }
 
   static Action onLoadData(GoodDetailModel goodDetail) {
     return Action(GoodDetailAction.loadData,

@@ -1,11 +1,15 @@
 
 // import 'package:beauty_flutter/custom_appbar.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'  hide Action;
 import 'package:flutter/services.dart';
 import '../home.dart';
 import '../classify.dart';
-import '../cart.dart';
+import '../cart_page/page.dart';
 import '../my.dart';
+
+import '../../redux/Global_Shop_Cart/store.dart';
+import '../../redux/Global_Shop_Cart/state.dart';
+import 'package:fish_redux/fish_redux.dart';
 
 class ContentPager extends StatefulWidget {
   final ValueChanged<int> onPageChanged;
@@ -45,14 +49,41 @@ class _ContentPagerState extends State<ContentPager> {
           children: <Widget>[
             _wrapItem(HomePage()),
             _wrapItem(ClassifyPage()),
-            _wrapItem(CartPage()),
+            _cartPage(),
+            // _wrapItem(CartPage().buildPage({})),
             _wrapItem(MyPage()),
           ],
         ))
       ],
     );
   }
+  Widget _cartPage(){
+    var page = CartPage();
+  bool flag = page.isTypeof<GlobalBaseState>();
+  // print('flag--- is $flag');
+  if (flag) {
+    page.connectExtraStore<GlobalState>(GlobalStore.store,
+        (Object pagestate, GlobalState appState) {
+      // final GlobalBaseState p=pagestate;
+      // if(p.totalNumber!=appState.totalNumber){
+      // print('===++==');
 
+      if (pagestate is Cloneable) {
+        final Object copy = pagestate.clone();
+        final GlobalBaseState newState = copy;
+        newState.shopCart = appState.shopCart;
+        newState.totalNumber = appState.totalNumber;
+        newState.totalPrice = appState.totalPrice;
+        newState.themeColor = appState.themeColor;
+
+        return newState;
+      }
+      // }
+      return pagestate;
+    });
+  }
+  return page.buildPage({});
+  }
   Widget _wrapItem(Widget widget) {
     return Container(
       // padding: EdgeInsets.only(top: 20),

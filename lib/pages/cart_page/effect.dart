@@ -8,15 +8,15 @@ import '../../redux/Global_Shop_Cart/store.dart';
 import '../../services/api.dart';
 import '../../utils/net.dart';
 import '../../models/good.dart';
+import '../../utils/sqflite/shopcart_dbhelper.dart';
 
 Effect<CartState> buildEffect() {
   return combineEffects(<Object, Effect<CartState>>{
     Lifecycle.initState: _loadData,
-    CartAction.action: _onAction,
   });
 }
 
-void _onAction(Action action, Context<CartState> ctx) {}
+
 // 加载接口数据
 void _loadData(Action action, Context<CartState> ctx) async {
   final url = Api.getHotGoods;
@@ -32,4 +32,10 @@ void _loadData(Action action, Context<CartState> ctx) async {
   } catch (err) {
     print(err);
   }
+
+  var dbHelper = ShopCartDBHelper();
+  List shopCartData = await dbHelper.getShopCartData();
+  print(shopCartData.length);
+  GlobalStore.store
+      .dispatch(GlobalActionCreator.onInitCartAction(shopCartData));
 }
