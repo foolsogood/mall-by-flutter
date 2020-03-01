@@ -11,7 +11,7 @@ Widget buildView(CalcState state, Dispatch dispatch, ViewService viewService) {
   int totalNumber = state.totalNumber;
   int totalPrice = state.totalPrice;
   var shopCart = state.shopCart;
-  String sendTime=state.sendTime;
+  String sendTime = state.sendTime;
   print(shopCart);
 
   print('totalNumber is $totalNumber');
@@ -39,17 +39,15 @@ Widget buildView(CalcState state, Dispatch dispatch, ViewService viewService) {
               trailing: Icon(Icons.arrow_right),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 NavigatorUtil.jump(viewService.context, Routes.sendTime);
-                
               },
               child: ListTile(
-              title: Text('送货时间'),
-              subtitle: Text(sendTime??''),
-              trailing: Icon(Icons.arrow_right),
+                title: Text('送货时间'),
+                subtitle: Text(sendTime ?? ''),
+                trailing: Icon(Icons.arrow_right),
+              ),
             ),
-            )
-            ,
           ]).toList()),
     ));
   }

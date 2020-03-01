@@ -37,8 +37,8 @@ class MyPage extends StatelessWidget {
     }
 
     Widget midHandler() {
-      List orderList =statusList.where((item) => item["status"] != 0).toList();
-          
+      List orderList = statusList.where((item) => item["status"] != 0).toList();
+
       return Container(
           margin: const EdgeInsets.only(top: 10.0),
           color: Colors.white,

@@ -1,6 +1,4 @@
 import 'package:event_bus/event_bus.dart';
 
-// class ApplicationEvent {
-//   static EventBus event;
-// }
+// 全局唯一事件总线实例
 EventBus eventBus=new EventBus();
