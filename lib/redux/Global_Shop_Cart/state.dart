@@ -35,6 +35,7 @@ class GlobalState
 }
 
 GlobalState initState(Map<String, dynamic> args) {
+  print(args);
   return GlobalState();
 }
 

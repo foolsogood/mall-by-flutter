@@ -1,6 +1,5 @@
-
 // import 'package:beauty_flutter/custom_appbar.dart';
-import 'package:flutter/material.dart'  hide Action;
+import 'package:flutter/material.dart' hide Action;
 import 'package:flutter/services.dart';
 import '../home.dart';
 import '../classify.dart';
@@ -14,9 +13,11 @@ import 'package:fish_redux/fish_redux.dart';
 class ContentPager extends StatefulWidget {
   final ValueChanged<int> onPageChanged;
   final ContentPagerController contentPagerController;
+  final int tabIndex;
 
   //构造方法，可选参数
-  const ContentPager({Key key, this.onPageChanged, this.contentPagerController})
+  const ContentPager(
+      {Key key, this.tabIndex, this.onPageChanged, this.contentPagerController})
       /**初始化列表@https://coding.imooc.com/learn/list/321.html**/
       : super(key: key);
 
@@ -25,11 +26,13 @@ class ContentPager extends StatefulWidget {
 }
 
 class _ContentPagerState extends State<ContentPager> {
-  PageController _pageController = PageController(
-      /**视窗比例**/
-      viewportFraction: 1.0);
+  PageController _pageController;
   @override
   void initState() {
+    _pageController = PageController(
+        initialPage: widget.tabIndex ?? 0,
+        /**视窗比例**/
+        viewportFraction: 1.0);
     if (widget.contentPagerController != null) {
       widget.contentPagerController._pageController = _pageController;
     }
@@ -57,33 +60,35 @@ class _ContentPagerState extends State<ContentPager> {
       ],
     );
   }
-  Widget _cartPage(){
+
+  Widget _cartPage() {
     var page = CartPage();
-  bool flag = page.isTypeof<GlobalBaseState>();
-  // print('flag--- is $flag');
-  if (flag) {
-    page.connectExtraStore<GlobalState>(GlobalStore.store,
-        (Object pagestate, GlobalState appState) {
-      // final GlobalBaseState p=pagestate;
-      // if(p.totalNumber!=appState.totalNumber){
-      // print('===++==');
+    bool flag = page.isTypeof<GlobalBaseState>();
+    // print('flag--- is $flag');
+    if (flag) {
+      page.connectExtraStore<GlobalState>(GlobalStore.store,
+          (Object pagestate, GlobalState appState) {
+        // final GlobalBaseState p=pagestate;
+        // if(p.totalNumber!=appState.totalNumber){
+        // print('===++==');
 
-      if (pagestate is Cloneable) {
-        final Object copy = pagestate.clone();
-        final GlobalBaseState newState = copy;
-        newState.shopCart = appState.shopCart;
-        newState.totalNumber = appState.totalNumber;
-        newState.totalPrice = appState.totalPrice;
-        newState.themeColor = appState.themeColor;
+        if (pagestate is Cloneable) {
+          final Object copy = pagestate.clone();
+          final GlobalBaseState newState = copy;
+          newState.shopCart = appState.shopCart;
+          newState.totalNumber = appState.totalNumber;
+          newState.totalPrice = appState.totalPrice;
+          newState.themeColor = appState.themeColor;
 
-        return newState;
-      }
-      // }
-      return pagestate;
-    });
+          return newState;
+        }
+        // }
+        return pagestate;
+      });
+    }
+    return page.buildPage({});
   }
-  return page.buildPage({});
-  }
+
   Widget _wrapItem(Widget widget) {
     return Container(
       // padding: EdgeInsets.only(top: 20),

@@ -3,7 +3,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 import './application.dart';
 import './routers.dart';
-import '../pages/home.dart';
+import '../pages/common/with_bottom_tab.dart';
 class NavigatorUtil{
   static void goBack(BuildContext context){
     Navigator.pop(context);
@@ -22,11 +22,11 @@ class NavigatorUtil{
         return Application.router.navigateTo(context, title, transition: TransitionType.inFromRight);
         /// 指定了 转场动画
     }
-    // 跳到首页 
-    static Future toHomePage(BuildContext context) {
+    // 跳到有底部导航的页面 
+    static Future switchTab(BuildContext context,int tabIndex) {
     return Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => WithBottomTab(tabIndex:tabIndex),
         ),
         (route) => route == null);
   }

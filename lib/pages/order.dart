@@ -19,23 +19,16 @@ class _OrderPageState extends State<OrderPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    mTabController = TabController(vsync: this, length: statusList.length);
+    int _idx=0;
+    if (widget.typeId != null) {
+       _idx = statusList
+          .indexWhere((item) => item["status"] == int.parse(widget.typeId));
+    }
+    mTabController = TabController(vsync: this,initialIndex:_idx, length: statusList.length);
     mTabController.addListener(() {
-      // print('index is ${mTabController.index}');
-      // print('previousIndex is ${mTabController.previousIndex}');
-      // print('indexIsChanging is ${mTabController.indexIsChanging}');
-
-      // if (mTabController.indexIsChanging) {
       getOrders(currentIdx: statusList[mTabController.index]["status"]);
-      // }
     });
     if (widget.typeId != null) {
-      final _idx = statusList
-          .indexWhere((item) => item["status"] == int.parse(widget.typeId));
-      print('当前status为${widget.typeId},下标$_idx');
-      setState(() {
-        initialIndex = _idx;
-      });
       getOrders(currentIdx: int.parse(widget.typeId));
     } else {
       getOrders(currentIdx: 0);

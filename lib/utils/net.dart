@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:oktoast/oktoast.dart';
 
 var dio=new Dio(BaseOptions(responseType: ResponseType.json));
 class NetUtils {
   // get请求
   static Future get(String url, {Map<String, dynamic> params}) async {
+    // showToast("content");
     var response = await dio.get(url, queryParameters: params);
     return response.data;
   }

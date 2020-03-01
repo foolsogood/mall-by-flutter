@@ -3,6 +3,8 @@ import 'content.dart';
 
 ///底部导航框架搭建
 class WithBottomTab extends StatefulWidget {
+  final int tabIndex;
+  WithBottomTab({Key key, this.tabIndex}) : super(key: key);
   @override
   _WithBottomTabState createState() => _WithBottomTabState();
 }
@@ -13,6 +15,15 @@ class _WithBottomTabState extends State<WithBottomTab> {
   int _currentIndex = 0;
   final ContentPagerController _contentPagerController =
       ContentPagerController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _currentIndex = widget.tabIndex ?? 0;
+    });
+    _contentPagerController.jumpToPage(_currentIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +43,7 @@ class _WithBottomTabState extends State<WithBottomTab> {
           ),
         ),
         child: ContentPager(
+          tabIndex:widget.tabIndex,
           contentPagerController: _contentPagerController,
           onPageChanged: (int index) {
             setState(() {

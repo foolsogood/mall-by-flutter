@@ -178,8 +178,8 @@ Widget buildView(
                           flex: 2,
                           child: InkWell(
                             onTap: () {
-                              // NavigatorUtil.toHomePage(
-                              //     viewService.context);
+                              NavigatorUtil.switchTab(
+                                  viewService.context,0);
                             },
                             child: Container(
                               child: Column(
@@ -196,6 +196,8 @@ Widget buildView(
                             flex: 2,
                             child: InkWell(
                               onTap: () {
+                                NavigatorUtil.switchTab(
+                                  viewService.context,1);
                                 // NavigatorUtil.redirect(
                                 //     viewService.context, Routes.classify);
                               },

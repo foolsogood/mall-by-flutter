@@ -25,7 +25,9 @@ class GoodListItemModel {
 class _ClassifyPageState extends State<ClassifyPage> {
   List cateList = [];
   List<GoodListItemModel> goodList = [];
-  ScrollController _scrollController;
+  ScrollController _bodyScrollController;
+  ScrollController _headerScrollController;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -84,13 +86,14 @@ class _ClassifyPageState extends State<ClassifyPage> {
     Widget titleHandler() {
       if (cateList.length == 0) {
         // return Container();
-      return  SliverToBoxAdapter(
-            child: Container(),
-          );
+        return SliverToBoxAdapter(
+          child: Container(),
+        );
       }
       var con = Container(
         color: Colors.white,
         child: SingleChildScrollView(
+          controller: _headerScrollController,
           scrollDirection: Axis.horizontal,
           reverse: false,
           padding: EdgeInsets.all(0.0),
@@ -98,13 +101,18 @@ class _ClassifyPageState extends State<ClassifyPage> {
           physics: BouncingScrollPhysics(),
           child: Center(
             child: Row(
-              children: cateList.map((item) {
-                return Container(
-                  width: 100.0,
-                  height: 60.0,
-                  child: Center(
-                    child: Text(item["cate"]),
+              children: cateList.asMap().keys.map((idx) {
+                return InkWell(
+                  child: Container(
+                    width: 100.0,
+                    height: 60.0,
+                    child: Center(
+                      child: Text(cateList[idx]["cate"]),
+                    ),
                   ),
+                  onTap: () {
+                    print(idx.toString());
+                  },
                 );
               }).toList(),
             ),
@@ -112,75 +120,13 @@ class _ClassifyPageState extends State<ClassifyPage> {
         ),
       );
       return SliverPersistentHeader(
-          pinned: true, delegate: CustomSliverDelegate(widget: con)
-          );
+          pinned: true, delegate: CustomSliverDelegate(widget: con));
     }
 
     List<Widget> listHandler() {
       if (goodList.length == 0) {
         return List<Container>();
       }
-      // return Container(
-      //   child: ListView(
-      //     controller: _scrollController,
-      //     shrinkWrap: true,
-      //     children: goodList.map((item) {
-      //       final goodListItem = item.data;
-      //       var _cur = GridView.count(
-      //         shrinkWrap: true,
-      //         //水平子Widget之间间距
-      //         crossAxisSpacing: 5.0,
-      //         //垂直子Widget之间间距
-      //         mainAxisSpacing: 5.0,
-      //         //GridView内边距
-      //         // padding: EdgeInsets.all(10.0),
-      //         //一行的Widget数量
-      //         crossAxisCount: 3,
-      //         //子Widget宽高比例
-      //         childAspectRatio: 0.75,
-      //         //子Widget列表
-      //         children: goodListItem.map((goodInfo) {
-      //           return GestureDetector(
-      //             onTap: () {
-      //               NavigatorUtil.jump(context,
-      //                   '${Routes.goodDetail}?goodId=${goodInfo.goodId}');
-      //             },
-      //             child: Container(
-      //               color: Colors.white,
-      //               child: Column(
-      //                 children: <Widget>[
-      //                   Image.network(goodInfo.imgs[0]),
-      //                   Text(goodInfo.goodName)
-      //                 ],
-      //               ),
-      //             ),
-      //           );
-      //         }).toList(),
-      //       );
-      //       return Container(
-      //         margin: const EdgeInsets.only(top: 10.0),
-      //         child: ListView(
-      //           controller: _scrollController,
-      //           shrinkWrap: true,
-      //           children: <Widget>[
-      //             Container(
-      //               height: 40.0,
-      //               color: Colors.white,
-      //               child: Center(
-      //                 child: Text(item.data[0].cate),
-      //               ),
-      //             ),
-      //             Divider(
-      //               height: 1.0,
-      //               color: Colors.black54,
-      //             ),
-      //             _cur
-      //           ],
-      //         ),
-      //       );
-      //     }).toList(),
-      //   ),
-      // );
       List<Widget> _list = [];
       Widget renderTitle({String title}) {
         return SliverToBoxAdapter(
@@ -227,90 +173,19 @@ class _ClassifyPageState extends State<ClassifyPage> {
         _list.add(renderTitle(title: goodListItem.data[0].cate));
         _list.add(renderGrid(goodListItem: goodListItem));
       });
-      // var _list = goodList.map((goodListItem) {
-      //   return
-      //   SliverGrid(
-      //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //       crossAxisCount: 3, //Grid按两列显示
-      //       mainAxisSpacing: 5.0,
-      //       crossAxisSpacing: 5.0,
-      //       childAspectRatio: 0.75,
-      //     ),
-      //     delegate: SliverChildBuilderDelegate((BuildContext context, int idx) {
-      //       final goodInfo = goodListItem.data[idx];
-      //       return GestureDetector(
-      //         onTap: () {
-      //           NavigatorUtil.jump(
-      //               context, '${Routes.goodDetail}?goodId=${goodInfo.goodId}');
-      //         },
-      //         child: Container(
-      //           color: Colors.white,
-      //           child: Column(
-      //             children: <Widget>[
-      //               Image.network(goodInfo.imgs[0]),
-      //               Text(goodInfo.goodName)
-      //             ],
-      //           ),
-      //         ),
-      //       );
-      //     }, childCount: goodListItem.data.length),
-      //   );
-      // }).toList();
-      return _list;
-      // return SliverPadding(
-      //     padding: const EdgeInsets.all(8.0),
-      //     sliver: SliverFixedExtentList(
-      //       itemExtent: 50.0,
-      //       delegate:
-      //           SliverChildBuilderDelegate((BuildContext context, int index) {
-      //         final goodListItem = goodList[index];
-      //         print(goodListItem);
-      //         return SliverGrid(
-      //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //             crossAxisCount: 3, //Grid按两列显示
-      //             mainAxisSpacing: 5.0,
-      //             crossAxisSpacing: 5.0,
-      //             childAspectRatio: 0.75,
-      //           ),
-      //           delegate:
-      //               SliverChildBuilderDelegate((BuildContext context, int idx) {
-      //             return Container(
-      //                 margin: const EdgeInsets.only(top: 10.0),
-      //                 child: Text('123')
-      //                 //  Container(
-      //                 //   color: Colors.white,
-      //                 //   child: Column(
-      //                 //     children: <Widget>[
-      //                 //       // Image.network(goodInfo.imgs[0]),
-      //                 //       // Text(goodInfo.goodName)
 
-      //                 //     ],
-      //                 //   ),
-      //                 // )
-      //                 );
-      //           }, childCount: goodListItem.data.length),
-      //         );
-      //       }, childCount: goodList.length),
-      //     ));
+      return _list;
     }
 
     return Material(
       child: CustomScrollView(
+        controller: _bodyScrollController,
         slivers: <Widget>[
           titleHandler(),
-          // SliverToBoxAdapter(
-          //   child: titleHandler(),
-          // ),
           ...listHandler(),
         ],
       ),
     );
-    // return Container(
-    //   child: ListView(
-    //     controller: _scrollController,
-    //     children: <Widget>[titleHandler(), listHandler()],
-    //   ),
-    // );
   }
 }
 
