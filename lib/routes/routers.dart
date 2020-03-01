@@ -10,6 +10,10 @@ class Routes {
   static String order = "/order";
 
   static String goodDetail = "/goodDetail";
+  static String calc = "/calc";
+  static String sendTime = "/sendTime";
+
+
 
 
   static void configureRoutes(Router router) {
@@ -24,6 +28,10 @@ class Routes {
     router.define(order, handler: orderHandler);
 
     router.define(goodDetail, handler: goodDetailHandler);
+    router.define(calc, handler: calcHandler);
+    router.define(sendTime, handler: sendTimeHandler);
+
+
 
   }
 }

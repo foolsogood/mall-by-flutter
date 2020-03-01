@@ -10,6 +10,9 @@ import '../../redux/Global_Shop_Cart/action.dart';
 import '../../components/goodListGridView.dart';
 import '../../components/stepper.dart';
 
+import '../../routes/routers.dart';
+import '../../routes/navigator_util.dart';
+
 @override
 Widget buildView(
     CartState state, Fish.Dispatch dispatch, Fish.ViewService viewService) {
@@ -144,6 +147,10 @@ Widget buildView(
                         ),
                         Expanded(
                           flex: 1,
+                          child:InkWell(
+                            onTap: (){
+                              NavigatorUtil.jump(viewService.context,Routes.calc );
+                            },
                           child: Container(
                             height: 60.0,
                             color: Colors.redAccent,
@@ -154,6 +161,7 @@ Widget buildView(
                               ),
                             ),
                           ),
+                          )
                         ),
                       ],
                     ),

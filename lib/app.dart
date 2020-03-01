@@ -5,10 +5,10 @@ import 'routes/routers.dart';
 import 'pages/common/with_bottom_tab.dart';
 import 'package:oktoast/oktoast.dart';
 
-// import './pages/goodDetail.dart';
+import './pages/sendTime.dart';
 import './pages/goodDetail_page/page.dart';
 import './pages/cart_page/page.dart';
-import './pages/test.dart';
+import './pages/calc_page/page.dart';
 
 class App extends StatelessWidget {
   App() {
@@ -22,6 +22,8 @@ class App extends StatelessWidget {
       child: MaterialApp(
           title: '我的商城',
           home: WithBottomTab(),
+          // home: SendTimePage(),
+
 
           // home: GoodDetailPage().buildPage({"goodId":"42fbd746-ac54-4aed-87ce-fa36866969e0"}),
 

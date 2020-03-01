@@ -9,6 +9,9 @@ import '../pages/classify.dart';
 import '../pages/order.dart';
 import '../pages/goodDetail_page/page.dart';
 import '../pages/cart_page/page.dart';
+import '../pages/calc_page/page.dart';
+import '../pages/sendTime.dart';
+
 
 import '../redux/Global_Shop_Cart/state.dart';
 import '../redux/Global_Shop_Cart/store.dart';
@@ -22,14 +25,33 @@ final cartHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   var page = CartPage();
   bool flag = page.isTypeof<GlobalBaseState>();
+  if (flag) {
+    page.connectExtraStore<GlobalState>(GlobalStore.store,
+        (Object pagestate, GlobalState appState) {
+      if (pagestate is Cloneable) {
+        final Object copy = pagestate.clone();
+        final GlobalBaseState newState = copy;
+        newState.shopCart = appState.shopCart;
+        newState.totalNumber = appState.totalNumber;
+        newState.totalPrice = appState.totalPrice;
+        newState.themeColor = appState.themeColor;
+
+        return newState;
+      }
+      // }
+      return pagestate;
+    });
+  }
+  return page.buildPage({});
+});
+final calcHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  var page = CalcPage();
+  bool flag = page.isTypeof<GlobalBaseState>();
   print('flag is $flag');
   if (flag) {
     page.connectExtraStore<GlobalState>(GlobalStore.store,
         (Object pagestate, GlobalState appState) {
-      // final GlobalBaseState p=pagestate;
-      // if(p.totalNumber!=appState.totalNumber){
-      print('=====');
-
       if (pagestate is Cloneable) {
         final Object copy = pagestate.clone();
         final GlobalBaseState newState = copy;
@@ -68,4 +90,8 @@ final goodDetailHandler = new Handler(
   final goodId = params["goodId"].first;
   return GoodDetailPage().buildPage({"goodId": goodId.toString()});
   // return GoodDetailPage(goodId: goodId.toString());
+});
+final sendTimeHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return SendTimePage();
 });
