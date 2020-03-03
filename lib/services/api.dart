@@ -1,6 +1,6 @@
 import 'config.dart';
 
-final server = Config.server;
+final server = Config.getServer;
 
 class Api {
   static String getGoodsByCate = "$server/good/getGoodByCateId/:cateId";
