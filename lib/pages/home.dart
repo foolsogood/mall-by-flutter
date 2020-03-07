@@ -6,6 +6,8 @@ import '../models/banner.dart';
 import '../services/api.dart';
 import '../utils/net.dart';
 import '../components/goodListGridView.dart';
+import '../routes/navigator_util.dart';
+import '../routes/routers.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,11 +18,14 @@ class _HomePageState extends State<HomePage> {
   List<BannerModel> banners = [];
   List<GoodModel> newGoodsList = [];
   List<GoodModel> hotGoodsList = [];
-
+  FocusNode _focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
-
+    // _focusNode.addListener(() {
+    //   if (_focusNode.hasFocus) {
+    //   }
+    // });
     getNewGoods();
     getHotGoods();
 
@@ -124,8 +129,52 @@ class _HomePageState extends State<HomePage> {
       ));
     }
 
+    Widget topHandler() {
+      Widget buildTextField() {
+        //theme设置局部主题
+        return TextField(
+          focusNode: _focusNode,
+          // cursorColor: Colors.white, //设置光标
+          decoration: InputDecoration(
+              //输入框decoration属性
+              contentPadding: new EdgeInsets.only(left: 0.0),
+//            fillColor: Colors.white,
+              border: InputBorder.none,
+              icon: Icon(Icons.search),
+              hintText: "淘我想要",
+              hintMaxLines: 1,
+              hintStyle: new TextStyle(fontSize: 14, color: Colors.grey)),
+          style: new TextStyle(fontSize: 14, color: Colors.grey),
+          onTap: () {
+            NavigatorUtil.jump(context, Routes.search);
+            _focusNode.unfocus();
+          },
+        );
+      }
+
+      Widget editView() {
+        return Container(
+          //修饰黑色背景与圆角
+          decoration: new BoxDecoration(
+            border: Border.all(color: Colors.white, width: 1.0), //灰色的一层边框
+            color: Colors.white,
+            borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+          ),
+          alignment: Alignment.center,
+          height: 36,
+          padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+          child: buildTextField(),
+        );
+      }
+
+      return editView();
+    }
+
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: topHandler(),
+          // backgroundColor: Colors.black,
+        ),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverToBoxAdapter(
@@ -135,14 +184,6 @@ class _HomePageState extends State<HomePage> {
             GoodListGridView(list: newGoodsList),
             renderTitle(title: '热门商品'),
             GoodListGridView(list: hotGoodsList),
-            // SliverPadding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   sliver: GoodListGridView(list: newGoodsList, title: "最新商品"),
-            // ),
-            // SliverPadding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   sliver: GoodListGridView(list: hotGoodsList, title: "热门商品"),
-            // ),
           ],
         ));
   }

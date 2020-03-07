@@ -12,9 +12,7 @@ class Routes {
   static String goodDetail = "/goodDetail";
   static String calc = "/calc";
   static String sendTime = "/sendTime";
-
-
-
+  static String search = "/search";
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
@@ -30,8 +28,6 @@ class Routes {
     router.define(goodDetail, handler: goodDetailHandler);
     router.define(calc, handler: calcHandler);
     router.define(sendTime, handler: sendTimeHandler);
-
-
-
+    router.define(search, handler: searchHandler);
   }
 }

@@ -1,22 +1,24 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:oktoast/oktoast.dart';
 import '../services/config.dart';
 import '../mock/mockServer.dart';
+import '../event/event_bus.dart';
+import '../event/event_model.dart';
 
 var dio = new Dio(BaseOptions(responseType: ResponseType.json));
 
 class NetUtils {
   // get请求
   static Future get(String url, {Map<String, dynamic> params}) async {
-    // showToast("content");
+    eventBus.fire(LoadingEvent('show', 'loading'));
     // mock 环境
     if (Config.env == Env.MOCK) {
       print(' current env is ${Config.env}');
       return MockServer().getData(url);
     }
     var response = await dio.get(url, queryParameters: params);
+    eventBus.fire(LoadingEvent('hide', ''));
     return response.data;
   }
 

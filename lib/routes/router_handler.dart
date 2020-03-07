@@ -11,6 +11,8 @@ import '../pages/goodDetail_page/page.dart';
 import '../pages/cart_page/page.dart';
 import '../pages/calc_page/page.dart';
 import '../pages/sendTime.dart';
+import '../pages/search.dart';
+
 
 
 import '../redux/Global_Shop_Cart/state.dart';
@@ -94,4 +96,8 @@ final goodDetailHandler = new Handler(
 final sendTimeHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return SendTimePage();
+});
+final searchHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return SearchPage();
 });

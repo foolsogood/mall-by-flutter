@@ -1,7 +1,8 @@
 import 'package:fish_redux/fish_redux.dart';
 
 import '../../models/shopCartModel.dart';
-
+import '../../event/event_bus.dart';
+import '../../event/event_model.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -68,9 +69,11 @@ GlobalState _onAddToCartReducer(GlobalState state, Action action) {
     tempShopCart[goodId].totalPrice = totalPrice;
     tempShopCart[goodId].number = number;
     dbHelper.updateCart(tempShopCart[goodId]);
+    eventBus.fire(ShowToastEvent('show', '已经在购物车'));
   } else {
     tempShopCart[goodId] = goodInfo;
     dbHelper.insertCart(goodInfo);
+    eventBus.fire(ShowToastEvent('show', '加入购物车'));
   }
   int totalNumber = calcTotalNumAndPrice(tempShopCart)["totalNumber"];
   int totalPrice = calcTotalNumAndPrice(tempShopCart)["totalPrice"];
