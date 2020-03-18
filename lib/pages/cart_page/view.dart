@@ -1,7 +1,6 @@
 import 'package:fish_redux/fish_redux.dart' as Fish;
 import 'package:flutter/material.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 import '../../redux/Global_Shop_Cart/store.dart';
@@ -20,11 +19,12 @@ Widget buildView(
   int totalNumber = state.totalNumber;
   int totalPrice = state.totalPrice;
   var shopCart = state.shopCart;
-  print(shopCart);
+
+  // print(shopCart);
   // print('颜色:${state.themeColor}');
 
-  print('totalNumber is $totalNumber');
-  print('totalPrice is $totalPrice');
+  // print('totalNumber is $totalNumber');
+  // print('totalPrice is $totalPrice');
 
   if (hotGoodsList == null) {
     return Container();

@@ -86,7 +86,7 @@ List goods = [
     "id":5,
     "cate": "电脑",
     "imgs": [
-      "https://img13.360buyimg.com/n1/s450x450_jfs/t4537/245/4665218087/42126/5b5c2f39/591128e0Nb39b9000.jpg"
+      "https://img.pconline.com.cn/images/product/1225/1225781/q.jpg"
     ],
     "goodId": "6b2ed28e-afd1-49e2-8ca2-628264fdf3f3",
     "cateId": "f8289527-1c65-44c6-b224-61d2e72529f1",

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart' hide Action;
 
 import '../../models/good.dart';
 import '../../redux/Global_Shop_Cart/state.dart';
-import '../../redux/Global_Shop_Cart/store.dart';
 
 import '../../models/shopCartModel.dart';
 class CalcState implements GlobalBaseState, Cloneable<CalcState> {

@@ -50,7 +50,7 @@ final calcHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   var page = CalcPage();
   bool flag = page.isTypeof<GlobalBaseState>();
-  print('flag is $flag');
+  // print('flag is $flag');
   if (flag) {
     page.connectExtraStore<GlobalState>(GlobalStore.store,
         (Object pagestate, GlobalState appState) {

@@ -41,13 +41,11 @@ GlobalState _onInitCartReducer(GlobalState state, Action action) {
     ShopCartModel d = ShopCartModel.fromJson(item);
     tempShopCart[d.goodId] = d;
   });
-  print(tempShopCart);
   int totalNumber = calcTotalNumAndPrice(tempShopCart)["totalNumber"];
   int totalPrice = calcTotalNumAndPrice(tempShopCart)["totalPrice"];
   newState.totalNumber = totalNumber;
   newState.totalPrice = totalPrice;
   newState.shopCart = tempShopCart;
-  print(newState);
   return newState;
 }
 
@@ -65,7 +63,6 @@ GlobalState _onAddToCartReducer(GlobalState state, Action action) {
     var number = tempShopCart[goodId].number;
     number++;
     int totalPrice = price * number;
-    print('===$totalPrice');
     tempShopCart[goodId].totalPrice = totalPrice;
     tempShopCart[goodId].number = number;
     dbHelper.updateCart(tempShopCart[goodId]);
@@ -94,7 +91,7 @@ GlobalState _onUpdateCartReducer(GlobalState state, Action action) {
   var _curGood = tempShopCart[goodId];
   var price = _curGood.price;
   int _curTotalPrice = price * number;
-  print('===$_curTotalPrice');
+  // print('===$_curTotalPrice');
   _curGood.totalPrice = _curTotalPrice;
   _curGood.number = number;
   _curGood.isSelected = isSelected;

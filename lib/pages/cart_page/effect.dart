@@ -2,13 +2,10 @@ import 'package:fish_redux/fish_redux.dart';
 import 'action.dart';
 import 'state.dart';
 
-import '../../redux/Global_Shop_Cart/action.dart';
-import '../../redux/Global_Shop_Cart/store.dart';
 
 import '../../services/api.dart';
 import '../../utils/net.dart';
 import '../../models/good.dart';
-import '../../utils/sqflite/shopcart_dbhelper.dart';
 
 Effect<CartState> buildEffect() {
   return combineEffects(<Object, Effect<CartState>>{
@@ -32,10 +29,5 @@ void _loadData(Action action, Context<CartState> ctx) async {
   } catch (err) {
     print(err);
   }
-
-  var dbHelper = ShopCartDBHelper();
-  List shopCartData = await dbHelper.getShopCartData();
-  print(shopCartData.length);
-  GlobalStore.store
-      .dispatch(GlobalActionCreator.onInitCartAction(shopCartData));
+  
 }

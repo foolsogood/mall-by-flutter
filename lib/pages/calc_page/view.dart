@@ -1,7 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 import '../../routes/routers.dart';
@@ -10,12 +9,10 @@ import '../../routes/navigator_util.dart';
 Widget buildView(CalcState state, Dispatch dispatch, ViewService viewService) {
   int totalNumber = state.totalNumber;
   int totalPrice = state.totalPrice;
-  var shopCart = state.shopCart;
-  String sendTime = state.sendTime;
-  print(shopCart);
+  var calcShopCart = state.shopCart.values.where((item)=>item.isSelected==1).toList();
 
-  print('totalNumber is $totalNumber');
-  print('totalPrice is $totalPrice');
+  String sendTime = state.sendTime;
+ 
   Widget topHandler() {
     return SliverToBoxAdapter(
         child: Container(
@@ -133,7 +130,7 @@ Widget buildView(CalcState state, Dispatch dispatch, ViewService viewService) {
           shrinkWrap: true,
           children: ListTile.divideTiles(
                   context: viewService.context,
-                  tiles: shopCart.values.map((item) {
+                  tiles: calcShopCart.map((item) {
                     return Container(
                       color: Colors.white,
                       padding: const EdgeInsets.all(10.0),
@@ -171,6 +168,9 @@ Widget buildView(CalcState state, Dispatch dispatch, ViewService viewService) {
   }
 
   return Scaffold(
+    appBar: AppBar(
+      title: Text('结算'),
+    ),
     resizeToAvoidBottomInset: false,
     body: bottomBarHandler(
         insertWidget: CustomScrollView(
