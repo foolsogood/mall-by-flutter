@@ -14,7 +14,8 @@ class NetUtils {
     eventBus.fire(LoadingEvent('show', 'loading'));
     // mock 环境
     if (Config.env == Env.MOCK) {
-      print(' current env is ${Config.env}');
+      // print(' current env is ${Config.env}');
+      eventBus.fire(LoadingEvent('hide', ''));
       return MockServer().getData(url);
     }
     var response = await dio.get(url, queryParameters: params);
